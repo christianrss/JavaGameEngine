@@ -21,16 +21,22 @@ public class Camera {
 			position.z+=0.80f;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			position.x+=0.02f;
+			position.x+=0.80f;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			position.x-=0.02f;
+			position.x-=0.80f;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			position.y+=0.02f;
+			position.y+=0.80f;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-			position.y-=0.02f;
+			position.y-=0.80f;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+			pitch+=0.80f;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
+			pitch-=0.80f;
 		}
 	}
 
