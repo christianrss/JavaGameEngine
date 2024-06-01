@@ -31,10 +31,19 @@ public class MainGameLoop {
 		TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("tree")));
 		ModelTexture texture = staticModel.getTexture();
 		
+		TexturedModel grass = new TexturedModel(OBJLoader.loadObjModel("grassModel", loader), new ModelTexture(loader.loadTexture("grassTexture")));
+		grass.getTexture().setHasTransparency(true);
+		grass.getTexture().setUseFakeLighting(true);
+
+		TexturedModel fern = new TexturedModel(OBJLoader.loadObjModel("fern", loader), new ModelTexture(loader.loadTexture("fern")));
+		fern.getTexture().setHasTransparency(true);
+		
 		List<Entity> entities = new ArrayList<Entity>();
 		Random random = new Random();
 		for(int i = 0; i < 500; i++) {
 			entities.add(new Entity(staticModel, new Vector3f(random.nextFloat() * 800 - 400,0,random.nextFloat() * -600),0,0,0,3));
+			entities.add(new Entity(grass, new Vector3f(random.nextFloat() * 800 - 400,0,random.nextFloat() * -600),0,0,0,1));
+			entities.add(new Entity(fern, new Vector3f(random.nextFloat() * 800 - 400,0,random.nextFloat() * -600),0,0,0,0.6f));
 		}
 		
 		texture.setShineDamper(10);
