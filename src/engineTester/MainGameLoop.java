@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import entities.Player;
 import models.RawModel;
 import models.TexturedModel;
 import renderEngine.DisplayManager;
@@ -87,19 +88,26 @@ public class MainGameLoop {
 		
 		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap);
 		Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap);
-		Terrain terrain3 = new Terrain(1, -1, loader, texturePack, blendMap);
+		//Terrain terrain3 = new Terrain(1, -1, loader, texturePack, blendMap);
 		
 		Camera camera = new Camera();
-		
 		MasterRenderer renderer = new MasterRenderer();
+
+		RawModel bunnyModel = OBJLoader.loadObjModel("stanfordBunny", loader);
+		TexturedModel stanfordBunny = new TexturedModel(bunnyModel, new ModelTexture(
+			loader.loadTexture("white")));
+
+		Player player = new Player(stanfordBunny, new Vector3f(100, 0, -50), 0, 0, 0, 1);
+
 		while (!Display.isCloseRequested()) {
 			//entity.increasePosition(0, 0, -0.1f);
 			//entity.increaseRotation(0, 1, 0);
 			camera.move();
-			
+			player.move();
+			renderer.processEntity(player);
 			renderer.processTerrain(terrain);
 			renderer.processTerrain(terrain2);
-			renderer.processTerrain(terrain3);
+			//renderer.processTerrain(terrain3);
 			
 			for (Entity entity:entities) {
 				renderer.processEntity(entity);
