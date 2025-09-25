@@ -11,3 +11,8 @@ LWJGL 2.9.3 https://legacy.lwjgl.org/download.php.html
 CTRL + SHIFT + P -> Configure Java Run Time -> Classpath -> jdk1.8.0_202
 
 CTRL + SHIFT + D -> RUN AND DEBUG
+
+
+
+https://github.com/user-attachments/assets/4d5466ee-8704-4d16-94b9-057687c18ebd
+
