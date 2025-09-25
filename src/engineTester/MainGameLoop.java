@@ -58,18 +58,18 @@ public class MainGameLoop {
 
 		
 		List<Entity> entities = new ArrayList<Entity>();
-		Random random = new Random(676452);
-		for(int i = 0; i < 800; i++) {
-			if (i % 7 == 0) {
+		Random random = new Random(5666778);
+		for(int i = 0; i < 1200; i++) {
+			if (i % 2 == 0) {
 				entities.add(new Entity(grass, new Vector3f(random.nextFloat() * 800 - 400, 0 ,
 						random.nextFloat() * -400), 0, 0, 0, 1.8f));
 				entities.add(new Entity(flower, new Vector3f(random.nextFloat() * 800 - 400, 0,
 						random.nextFloat() * -400), 0, 0, 0, 2.3f));
-			}
-			
-			if (i % 3 == 0) {
 				entities.add(new Entity(fern, new Vector3f(random.nextFloat() * 800 - 400, 0,
 						random.nextFloat() * -400), 0, random.nextFloat() * 360, 0, 0.9f));
+			}
+			
+			if (i % 12 == 0) {
 				entities.add(new Entity(bobble, new Vector3f(random.nextFloat() * 800 - 400, 0,
 						random.nextFloat() * -600), 0, random.nextFloat() * 360, 0,
 						random.nextFloat() * 0.1f + 0.6f));
@@ -86,9 +86,16 @@ public class MainGameLoop {
 		//Entity entity = new Entity(staticModel, new Vector3f(0,0,-25),0,0,0,1);
 		Light light = new Light(new Vector3f(20000,40000,20000), new Vector3f(1,1,1));
 		
-		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap);
-		Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap);
-		//Terrain terrain3 = new Terrain(1, -1, loader, texturePack, blendMap);
+		List<Terrain> terrains = new ArrayList<>();
+		int size = 10;
+		int radius = size / 2;
+
+		for (int x = -radius; x < radius; x++) {
+			for (int z = -radius; z < radius; z++) {
+				Terrain terrain = new Terrain(x, z, loader, texturePack, blendMap);
+				terrains.add(terrain);
+			}
+		}
 		
 		MasterRenderer renderer = new MasterRenderer();
 
@@ -97,10 +104,10 @@ public class MainGameLoop {
 			loader.loadTexture("white")));*/
 
 		RawModel bunnyModel = OBJLoader.loadObjModel("person", loader);
-		TexturedModel stanfordBunny = new TexturedModel(bunnyModel, new ModelTexture(
+		TexturedModel person = new TexturedModel(bunnyModel, new ModelTexture(
 			loader.loadTexture("playerTexture")));
 
-		Player player = new Player(stanfordBunny, new Vector3f(100, 0, -50), 0, 0, 0, 1);
+		Player player = new Player(person, new Vector3f(300, 0, -500), 0, 0, 0, 1);
 		Camera camera = new Camera(player);
 
 		while (!Display.isCloseRequested()) {
@@ -109,9 +116,10 @@ public class MainGameLoop {
 			camera.move();
 			player.move();
 			renderer.processEntity(player);
-			renderer.processTerrain(terrain);
-			renderer.processTerrain(terrain2);
-			//renderer.processTerrain(terrain3);
+
+			for (Terrain terrain : terrains) {
+				renderer.processTerrain(terrain);
+			}
 			
 			for (Entity entity:entities) {
 				renderer.processEntity(entity);
