@@ -46,15 +46,19 @@ public class MainGameLoop {
 		grass.getTexture().setHasTransparency(true);
 		grass.getTexture().setUseFakeLighting(true);
 
-		TexturedModel fern = new TexturedModel(OBJLoader.loadObjModel("fern", loader), new ModelTexture(loader.loadTexture("fern")));
+		ModelTexture fernTextureAtlas = new ModelTexture(loader.loadTexture("fern"));
+		fernTextureAtlas.setNumberOfRows(2);
+
+		TexturedModel fern = new TexturedModel(OBJLoader.loadObjModel("fern", loader), fernTextureAtlas);
 		fern.getTexture().setHasTransparency(true);
 		
 		TexturedModel flower = new TexturedModel(OBJLoader.loadObjModel("grassModel", loader), new ModelTexture(loader.loadTexture("flower")));
 		flower.getTexture().setHasTransparency(true);
 		flower.getTexture().setUseFakeLighting(true);
 		
-		TexturedModel bobble = new TexturedModel(OBJLoader.loadObjModel("lowPolyTree", loader), 
-				new ModelTexture(loader.loadTexture("lowPolyTree")));
+		ModelTexture bobbleTexture = new ModelTexture(loader.loadTexture("lowPolyTree"));
+		bobbleTexture.setNumberOfRows(2);
+		TexturedModel bobble = new TexturedModel(OBJLoader.loadObjModel("lowPolyTree", loader), bobbleTexture);
 
 		Terrain  terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
 
@@ -67,14 +71,14 @@ public class MainGameLoop {
 				float y = terrain.getHeightOfTerrain(x, z);
 				//entities.add(new Entity(grass, new Vector3f(x, y, z), 0, 0, 0, 1.8f));
 				//entities.add(new Entity(flower, new Vector3f(x, y, z), 0, 0, 0, 2.3f));
-				entities.add(new Entity(fern, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.9f));
+				entities.add(new Entity(fern, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.9f));
 			}
 			
 			if (i % 5 == 0) {
 				float x = random.nextFloat() * 800 - 400;
 				float z = random.nextFloat() * - 600;
 				float y = terrain.getHeightOfTerrain(x, z);
-				entities.add(new Entity(bobble, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0,
+				entities.add(new Entity(bobble, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0,
 						random.nextFloat() * 0.1f + 0.6f));
 				x = random.nextFloat() * 800 - 400;
 				z = random.nextFloat() * - 600;
